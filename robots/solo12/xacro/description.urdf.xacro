@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--
+  Solo 12 — Gazebo simulation entry-point.
+
+  Used by hidro_robots/_gazebo.launch.py (robot_name:=solo12) or by the
+  dedicated solo12_gazebo.launch.py.
+
+  The robot is spawned as a free-floating body (no world joint) so that
+  it can fall, land on its feet, and walk.  After the ODRI Gazebo plugin
+  receives an "enable" service call it drives all joints to the safe
+  standing configuration defined in solo12.yaml.
+
+  Command-line xacro arguments:
+    simulation      — default true  (keep plugin active)
+    event_based_sim — default false (use standard Gazebo ODE physics)
+-->
+<robot name="solo12" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include
+    filename="$(find hidro_robots)/robots/solo12/xacro/definition.urdf.xacro"/>
+
+  <xacro:arg name="simulation"      default="true"/>
+  <xacro:arg name="event_based_sim" default="false"/>
+
+  <xacro:solo12
+    simulation="$(arg simulation)"
+    event_based_sim="$(arg event_based_sim)"/>
+
+</robot>
