@@ -70,11 +70,10 @@
         </geometry>
         <material name="solo_grey"><color rgba="0.8 0.8 0.8 1.0"/></material>
       </visual>
+      <!-- Simple box collision — mesh trimesh is unstable with ODE/DART -->
       <collision>
-        <origin xyz="${shoulder_vis_x} 0 0" rpy="0 0 0"/>
-        <geometry>
-          <mesh filename="package://hidro_robots/robots/solo12/meshes/${shoulder_mesh}"/>
-        </geometry>
+        <origin xyz="${sh_cx} ${sh_cy} ${sh_cz}" rpy="0 0 0"/>
+        <geometry><box size="0.19 0.035 0.035"/></geometry>
       </collision>
     </link>
 
@@ -104,11 +103,10 @@
         </geometry>
         <material name="solo_grey"><color rgba="0.8 0.8 0.8 1.0"/></material>
       </visual>
+      <!-- Simple box collision — mesh trimesh is unstable with ODE/DART -->
       <collision>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
-        <geometry>
-          <mesh filename="package://hidro_robots/robots/solo12/meshes/${upper_mesh}"/>
-        </geometry>
+        <origin xyz="0 0 -0.08" rpy="0 0 0"/>
+        <geometry><box size="0.04 0.04 0.16"/></geometry>
       </collision>
     </link>
 
@@ -138,11 +136,10 @@
         </geometry>
         <material name="solo_grey"><color rgba="0.8 0.8 0.8 1.0"/></material>
       </visual>
+      <!-- Sphere at foot tip — approximates ground contact, stable with ODE/DART -->
       <collision>
-        <origin xyz="0 0 0" rpy="0 0 0"/>
-        <geometry>
-          <mesh filename="package://hidro_robots/robots/solo12/meshes/${lower_mesh}"/>
-        </geometry>
+        <origin xyz="0 ${foot_y} -0.155" rpy="0 0 0"/>
+        <geometry><sphere radius="0.020"/></geometry>
       </collision>
     </link>
 
@@ -206,11 +203,10 @@
         </geometry>
         <material name="solo_grey"><color rgba="0.8 0.8 0.8 1.0"/></material>
       </visual>
+      <!-- Simple box collision — mesh trimesh is unstable with ODE/DART -->
       <collision>
         <origin xyz="0 0 0" rpy="0 0 0"/>
-        <geometry>
-          <mesh filename="package://hidro_robots/robots/solo12/meshes/solo_12_base.stl"/>
-        </geometry>
+        <geometry><box size="0.25 0.15 0.04"/></geometry>
       </collision>
     </link>
 
@@ -290,7 +286,7 @@
     <xacro:if value="${simulation}">
       <xacro:unless value="${event_based_sim}">
         <gazebo>
-          <plugin name="odri_gazebo" filename="libodri_gazebo_plugin.so">
+          <plugin name="odri_ros2_gazebo_plugin::OdriGazeboPlugin" filename="libodri_gazebo_plugin.so">
 
             <joint name="FL_HAA"><param name="safe_position"> 0.0</param><param name="safe_torque">0.5</param></joint>
             <joint name="FL_HFE"><param name="safe_position"> 0.8</param><param name="safe_torque">0.5</param></joint>
